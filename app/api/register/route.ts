@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL
 
 export async function POST(request: Request) {
@@ -24,15 +22,26 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: '전화번호 형식이 올바르지 않습니다.' }, { status: 400 })
     }
 
-    // Supabase 저장
+    // Supabase 저장 — 런타임에서 키 읽기
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    const supabaseKey = serviceKey || anonKey
+
+    console.log('Supabase URL:', supabaseUrl ? `${supabaseUrl.slice(0, 30)}...` : 'MISSING')
+    console.log('Service key length:', serviceKey?.length ?? 0, '| Anon key length:', anonKey?.length ?? 0)
+    console.log('Using key type:', serviceKey ? 'service_role' : 'anon')
+
     if (!supabaseUrl || !supabaseKey) {
       return NextResponse.json({ error: 'Supabase 설정이 없습니다.' }, { status: 500 })
     }
 
-    const keyType = process.env.SUPABASE_SERVICE_ROLE_KEY ? 'service_role' : 'anon'
-    console.log('Using Supabase key type:', keyType)
-
     const supabase = createClient(supabaseUrl, supabaseKey)
+
+    // 먼저 테이블 접근 테스트
+    const { count, error: countErr } = await supabase.from('registrations').select('*', { count: 'exact', head: true })
+    console.log('Table access test - count:', count, 'error:', countErr ? JSON.stringify(countErr) : 'none')
+
     const insertData = {
       name: name.trim(),
       gender,
@@ -45,7 +54,7 @@ export async function POST(request: Request) {
     const { data, error } = await supabase.from('registrations').insert(insertData).select('id')
 
     if (error) {
-      console.error('Supabase error detail:', JSON.stringify({ message: error.message, details: error.details, hint: error.hint, code: error.code }))
+      console.error('Supabase error full:', JSON.stringify(error, Object.getOwnPropertyNames(error)))
       throw error
     }
 
