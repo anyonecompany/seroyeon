@@ -5,7 +5,6 @@ import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'motion/react'
 import { X } from 'lucide-react'
 import Image from 'next/image'
-import { supabase } from '@/app/lib/supabase'
 import { event as gtagEvent } from '@/app/lib/gtag'
 import { event as pixelEvent } from '@/app/lib/pixel'
 
@@ -71,16 +70,22 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
         if (val) utmParams[key] = val
       })
 
-      if (!supabase) throw new Error('Supabase not configured')
-      const { error } = await supabase.from('registrations').insert({
-        name: name.trim(),
-        gender,
-        birth_date: birthDate,
-        phone,
-        ...utmParams,
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name.trim(),
+          gender,
+          birth_date: birthDate,
+          phone,
+          ...utmParams,
+        }),
       })
 
-      if (error) throw error
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || '등록에 실패했습니다.')
+      }
 
       gtagEvent('form_submit', {})
       pixelEvent('Lead')
