@@ -86,8 +86,10 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ success: true, id: data?.[0]?.id })
-  } catch (err) {
-    console.error('Registration error:', err)
-    return NextResponse.json({ error: '등록에 실패했습니다. 다시 시도해주세요.' }, { status: 500 })
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err)
+    const detail = (err as Record<string, unknown>)?.details || (err as Record<string, unknown>)?.code || ''
+    console.error('Registration error:', message, detail)
+    return NextResponse.json({ error: `등록 실패: ${message}` }, { status: 500 })
   }
 }
