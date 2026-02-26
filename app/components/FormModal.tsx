@@ -26,6 +26,8 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [agreed, setAgreed] = useState(false)
+  const [showTerms, setShowTerms] = useState(false)
 
   const [name, setName] = useState('')
   const [gender, setGender] = useState<string>('')
@@ -218,6 +220,52 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
             </div>
 
             <div className="p-6 border-t border-stone-200 bg-white">
+              <div className="mb-3">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <button
+                    type="button"
+                    role="checkbox"
+                    aria-checked={agreed}
+                    onClick={() => setAgreed((v) => !v)}
+                    className={`w-4 h-4 rounded-sm border flex items-center justify-center shrink-0 transition-colors ${
+                      agreed
+                        ? 'bg-[#FF6321] border-[#FF6321]'
+                        : 'bg-white border-stone-300'
+                    }`}
+                  >
+                    {agreed && (
+                      <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                        <path d="M1 4l2.5 2.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    )}
+                  </button>
+                  <span className="text-xs text-stone-500">
+                    <button
+                      type="button"
+                      onClick={(e) => { e.stopPropagation(); setShowTerms((v) => !v) }}
+                      className="underline underline-offset-2"
+                    >
+                      개인정보 수집·이용
+                    </button>
+                    에 동의합니다
+                  </span>
+                </label>
+                <AnimatePresence>
+                  {showTerms && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <p className="bg-stone-50 rounded-lg p-3 text-xs text-stone-500 mt-2 leading-relaxed">
+                        서로연 매치캠프 사전 등록을 위해 이름, 성별, 생년월일, 전화번호를 수집합니다.
+                        수집된 정보는 캠프 선발 안내 목적으로만 사용되며, 목적 달성 후 즉시 파기합니다.
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
               <AnimatePresence>
                 {submitError && (
                   <motion.p
@@ -233,9 +281,9 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
               <button
                 type="submit"
                 form="register-form"
-                disabled={loading}
+                disabled={loading || !agreed}
                 className={`w-full text-base font-medium py-4 rounded-xl active:scale-95 transition-all ${
-                  isValid() && !loading
+                  isValid() && agreed && !loading
                     ? 'bg-[#FF6321] hover:bg-[#E55A1E] text-white'
                     : 'bg-[#FF6321]/60 text-white'
                 }`}

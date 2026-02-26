@@ -4,6 +4,7 @@ import './globals.css'
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID
 const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID
+const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID
 
 export const metadata: Metadata = {
   title: '서로연 매치캠프 — 스펙 말고, 사람을 봅니다',
@@ -76,6 +77,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               />
             </noscript>
           </>
+        )}
+
+        {HOTJAR_ID && (
+          <Script id="hotjar" strategy="afterInteractive">
+            {`
+              (function(h,o,t,j,a,r){
+                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                h._hjSettings={hjid:${HOTJAR_ID},hjsv:6};
+                a=o.getElementsByTagName('head')[0];
+                r=o.createElement('script');r.async=1;
+                r.src=t+h._hjSettings.hjid+j;
+                a.appendChild(r);
+              })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=6');
+            `}
+          </Script>
         )}
       </body>
     </html>

@@ -13,6 +13,7 @@ import FAQ from '@/app/components/sections/FAQ'
 import Closing from '@/app/components/sections/Closing'
 import Footer from '@/app/components/Footer'
 import FloatingCTA from '@/app/components/FloatingCTA'
+import FloatingChatButton from '@/app/components/FloatingChatButton'
 import FormModal from '@/app/components/FormModal'
 import SuccessModal from '@/app/components/SuccessModal'
 import { event as gtagEvent } from '@/app/lib/gtag'
@@ -83,6 +84,7 @@ export default function LandingPage() {
       </div>
       <Footer />
 
+      <FloatingChatButton />
       <FloatingCTA onCtaClick={handleFormOpen} isModalOpen={isFormOpen || isSuccessOpen} />
       <Suspense fallback={null}>
         <FormModal isOpen={isFormOpen} onClose={handleFormClose} onSuccess={handleFormSuccess} />
