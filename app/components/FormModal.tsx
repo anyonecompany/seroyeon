@@ -139,8 +139,8 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
               </button>
             </div>
 
-            <div className="p-6 overflow-y-auto">
-              <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="p-6 overflow-y-auto flex-1">
+              <form id="register-form" onSubmit={handleSubmit} className="space-y-6">
                 {/* Name */}
                 <div>
                   <label className="block text-xs font-medium text-stone-700 mb-2">이름</label>
@@ -211,27 +211,25 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
                   <p className="text-xs font-medium text-stone-400 mt-1">선발 결과 안내용으로만 사용됩니다</p>
                   {errors.phone && <p className="text-xs font-medium text-red-500 mt-1">{errors.phone}</p>}
                 </div>
-
-                <div className="pt-4">
-                  <button
-                    type="submit"
-                    disabled={loading || !isValid()}
-                    className={`w-full text-base font-medium py-4 rounded-xl active:scale-95 transition-all ${
-                      isValid() && !loading
-                        ? 'bg-[#FF6321] hover:bg-[#E55A1E] text-white'
-                        : 'bg-stone-300 text-white cursor-not-allowed'
-                    }`}
-                  >
-                    {loading ? '등록 중...' : '무료 사전 등록 완료하기'}
-                  </button>
-                  <p className="text-center text-xs font-medium text-stone-400 mt-3">
-                    결제 정보를 요구하지 않습니다
-                  </p>
-                  <p className="text-center text-xs font-medium text-stone-500 mt-2">
-                    ※ 등록 후 24시간 내 안내 문자를 보내드립니다
-                  </p>
-                </div>
               </form>
+            </div>
+
+            <div className="p-6 border-t border-stone-200 bg-white">
+              <button
+                type="submit"
+                form="register-form"
+                disabled={loading}
+                className={`w-full text-base font-medium py-4 rounded-xl active:scale-95 transition-all ${
+                  isValid() && !loading
+                    ? 'bg-[#FF6321] hover:bg-[#E55A1E] text-white'
+                    : 'bg-[#FF6321]/60 text-white'
+                }`}
+              >
+                {loading ? '등록 중...' : '무료 사전 등록 완료하기'}
+              </button>
+              <p className="text-center text-xs font-medium text-stone-400 mt-3">
+                결제 정보를 요구하지 않습니다
+              </p>
             </div>
           </motion.div>
         </div>
