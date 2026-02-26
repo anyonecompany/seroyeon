@@ -29,16 +29,25 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Supabase 설정이 없습니다.' }, { status: 500 })
     }
 
+    const keyType = process.env.SUPABASE_SERVICE_ROLE_KEY ? 'service_role' : 'anon'
+    console.log('Using Supabase key type:', keyType)
+
     const supabase = createClient(supabaseUrl, supabaseKey)
-    const { data, error } = await supabase.from('registrations').insert({
+    const insertData = {
       name: name.trim(),
       gender,
       birth_date,
       phone,
       ...utmParams,
-    }).select('id')
+    }
+    console.log('Inserting:', JSON.stringify(insertData))
 
-    if (error) throw error
+    const { data, error } = await supabase.from('registrations').insert(insertData).select('id')
+
+    if (error) {
+      console.error('Supabase error detail:', JSON.stringify({ message: error.message, details: error.details, hint: error.hint, code: error.code }))
+      throw error
+    }
 
     // Slack 알림
     if (slackWebhookUrl) {
