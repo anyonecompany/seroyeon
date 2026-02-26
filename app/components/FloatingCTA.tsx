@@ -61,13 +61,13 @@ export default function FloatingCTA({ onCtaClick, isModalOpen }: FloatingCTAProp
           initial={{ y: 100 }}
           animate={{ y: 0 }}
           exit={{ y: 100 }}
-          className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-stone-200 z-40 pb-[env(safe-area-inset-bottom)]"
+          className="fixed bottom-3 left-0 right-0 z-40 px-4 pb-[env(safe-area-inset-bottom)]"
         >
-          <div className="max-w-[480px] mx-auto flex items-center gap-3">
-            <p className="text-xs font-medium text-stone-500 shrink-0">100명+ 등록 중</p>
+          <div className="max-w-[480px] mx-auto bg-white/95 backdrop-blur-lg rounded-2xl shadow-lg px-4 pt-3 pb-4">
+            <p className="text-xs font-medium text-[#FF6321] text-center mb-2">100명+ 등록 중</p>
             <button
               onClick={handleCta}
-              className="flex-1 bg-[#FF6321] hover:bg-[#E55A1E] text-white text-base font-medium py-4 rounded-xl active:scale-95 transition-transform"
+              className="w-full bg-[#FF6321] hover:bg-[#E55A1E] text-white text-base font-medium py-4 rounded-xl active:scale-95 transition-transform"
             >
               무료 사전 등록
             </button>
