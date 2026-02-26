@@ -22,41 +22,24 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: '전화번호 형식이 올바르지 않습니다.' }, { status: 400 })
     }
 
-    // Supabase 저장 — 런타임에서 키 읽기
+    // Supabase 저장
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    const supabaseKey = serviceKey || anonKey
-
-    console.log('Supabase URL:', supabaseUrl ? `${supabaseUrl.slice(0, 30)}...` : 'MISSING')
-    console.log('Service key length:', serviceKey?.length ?? 0, '| Anon key length:', anonKey?.length ?? 0)
-    console.log('Using key type:', serviceKey ? 'service_role' : 'anon')
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
     if (!supabaseUrl || !supabaseKey) {
       return NextResponse.json({ error: 'Supabase 설정이 없습니다.' }, { status: 500 })
     }
 
     const supabase = createClient(supabaseUrl, supabaseKey)
-
-    // 먼저 테이블 접근 테스트
-    const { count, error: countErr } = await supabase.from('registrations').select('*', { count: 'exact', head: true })
-    console.log('Table access test - count:', count, 'error:', countErr ? JSON.stringify(countErr) : 'none')
-
-    const insertData = {
+    const { data, error } = await supabase.from('registrations').insert({
       name: name.trim(),
       gender,
       birth_date,
       phone,
       ...utmParams,
-    }
-    console.log('Inserting:', JSON.stringify(insertData))
+    }).select('id')
 
-    const { data, error } = await supabase.from('registrations').insert(insertData).select('id')
-
-    if (error) {
-      console.error('Supabase error full:', JSON.stringify(error, Object.getOwnPropertyNames(error)))
-      throw error
-    }
+    if (error) throw error
 
     // Slack 알림
     if (slackWebhookUrl) {
@@ -105,8 +88,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true, id: data?.[0]?.id })
   } catch (err: unknown) {
-    const errStr = err instanceof Error ? err.message : JSON.stringify(err)
-    console.error('Registration error:', errStr)
-    return NextResponse.json({ error: `등록 실패: ${errStr}` }, { status: 500 })
+    console.error('Registration error:', err instanceof Error ? err.message : JSON.stringify(err))
+    return NextResponse.json({ error: '등록에 실패했습니다. 잠시 후 다시 시도해주세요.' }, { status: 500 })
   }
 }
