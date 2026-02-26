@@ -24,7 +24,7 @@ export default function Closing({ onCtaClick }: ClosingProps) {
         <div className="bg-stone-800 border border-stone-700 rounded-2xl p-6 mb-10 text-left">
           <h3 className="text-2xl font-bold mb-4 text-center">서로연 매치캠프 1기</h3>
           <p className="text-base font-medium text-stone-300 leading-relaxed mb-4">
-            5월 29일 목요일부터 6월 1일 일요일까지.<br />
+            5월 29일 금요일부터 6월 1일 월요일까지.<br />
             남자 5명, 여자 5명. 딱 10명만 함께합니다.
           </p>
           <p className="text-base font-medium text-stone-500 mb-4">
