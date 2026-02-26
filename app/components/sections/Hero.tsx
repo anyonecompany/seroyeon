@@ -57,7 +57,7 @@ export default function Hero({ onCtaClick }: HeroProps) {
 
       <div className="relative z-10 max-w-[480px] mx-auto flex flex-col items-center pb-24 px-6 w-full">
         <p className="text-xs font-medium text-stone-300 mb-6 text-center">
-          5/29(목)~6/1(일) · 뇌과학 기반 결혼 매칭 캠프
+          5/29(금)~6/1(월) · 뇌과학 기반 결혼 매칭 캠프
         </p>
 
         <p className="flex items-center gap-2 text-xs font-medium text-stone-400 mb-4 text-center">
