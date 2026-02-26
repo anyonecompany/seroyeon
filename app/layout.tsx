@@ -13,6 +13,14 @@ export const metadata: Metadata = {
     description: '3박 4일, 남녀 각 5명. 뇌과학이 설계한 결혼 매칭 캠프.',
     type: 'website',
     locale: 'ko_KR',
+    images: [
+      {
+        url: '/images/og-kakao.png',
+        width: 1200,
+        height: 630,
+        alt: '서로연 매치캠프',
+      },
+    ],
   },
   robots: { index: false, follow: false },
 }
