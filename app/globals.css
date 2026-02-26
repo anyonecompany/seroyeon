@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Pretendard Variable', 'Pretendard', sans-serif;
+  letter-spacing: -0.04em;
+}
