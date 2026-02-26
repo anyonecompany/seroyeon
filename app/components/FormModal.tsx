@@ -25,6 +25,7 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
   const searchParams = useSearchParams()
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const [name, setName] = useState('')
   const [gender, setGender] = useState<string>('')
@@ -62,6 +63,7 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
     e.preventDefault()
     if (!validate()) return
 
+    setSubmitError(null)
     setLoading(true)
     try {
       const utmParams: Record<string, string> = {}
@@ -97,7 +99,7 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
       setErrors({})
       onSuccess()
     } catch (err) {
-      alert('일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
+      setSubmitError('일시적인 오류가 발생했어요. 아래 버튼을 눌러 다시 시도해주세요.')
       console.error('Registration error:', err)
     } finally {
       setLoading(false)
@@ -216,6 +218,18 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
             </div>
 
             <div className="p-6 border-t border-stone-200 bg-white">
+              <AnimatePresence>
+                {submitError && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 4 }}
+                    className="text-sm font-medium text-red-600 bg-red-50 rounded-xl px-4 py-3 mb-3 text-center"
+                  >
+                    {submitError}
+                  </motion.p>
+                )}
+              </AnimatePresence>
               <button
                 type="submit"
                 form="register-form"
@@ -226,7 +240,7 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
                     : 'bg-[#FF6321]/60 text-white'
                 }`}
               >
-                {loading ? '등록 중...' : '무료 사전 등록 완료하기'}
+                {loading ? '등록 중...' : submitError ? '다시 시도하기' : '무료 사전 등록 완료하기'}
               </button>
               <p className="text-center text-xs font-medium text-stone-400 mt-3">
                 결제 정보를 요구하지 않습니다
