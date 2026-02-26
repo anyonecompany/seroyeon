@@ -25,7 +25,6 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
   const searchParams = useSearchParams()
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
-  const [submitError, setSubmitError] = useState('')
 
   const [name, setName] = useState('')
   const [gender, setGender] = useState<string>('')
@@ -64,7 +63,6 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
     if (!validate()) return
 
     setLoading(true)
-    setSubmitError('')
     try {
       const utmParams: Record<string, string> = {}
       ;['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach((key) => {
@@ -97,11 +95,9 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
       setBirthDate('')
       setPhone('')
       setErrors({})
-      setSubmitError('')
       onSuccess()
     } catch (err) {
-      const msg = err instanceof Error ? err.message : '등록에 실패했습니다. 다시 시도해주세요.'
-      setSubmitError(msg)
+      alert('일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
       console.error('Registration error:', err)
     } finally {
       setLoading(false)
@@ -232,9 +228,6 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
               >
                 {loading ? '등록 중...' : '무료 사전 등록 완료하기'}
               </button>
-              {submitError && (
-                <p className="text-center text-xs font-medium text-red-500 mt-3">{submitError}</p>
-              )}
               <p className="text-center text-xs font-medium text-stone-400 mt-3">
                 결제 정보를 요구하지 않습니다
               </p>
