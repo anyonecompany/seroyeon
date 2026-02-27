@@ -2,7 +2,7 @@
 
 import { motion } from 'motion/react'
 
-const KAKAO_OPEN_CHAT_URL = 'https://open.kakao.com/o/sU8kovii'
+const KAKAO_OPEN_CHAT_URL = 'https://open.kakao.com/o/semVdyii'
 
 export default function FloatingChatButton() {
   const handleClick = () => {

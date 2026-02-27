@@ -106,7 +106,7 @@ export default function Pricing({ onCtaClick }: PricingProps) {
 
         <div className="bg-stone-900 text-white p-6 rounded-2xl text-center mb-12 border border-stone-700">
           <p className="text-base font-medium text-stone-300">
-            고민만 하는 <span className="text-stone-400 line-through">1년</span> vs 신청하는 <span className="text-[#FF6321] font-black">3분.</span>
+            고민만 하는 <span className="text-stone-400 line-through">1년</span> vs 신청하는 <span className="text-[#FF6321] font-black">30초.</span>
           </p>
         </div>
 
