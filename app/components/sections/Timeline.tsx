@@ -97,7 +97,13 @@ export default function Timeline() {
                   />
                 </button>
 
-                {isOpen && (
+                <div
+                  className="overflow-hidden transition-all duration-300 ease-in-out"
+                  style={{
+                    maxHeight: isOpen ? '600px' : '0px',
+                    opacity: isOpen ? 1 : 0,
+                  }}
+                >
                   <div className="px-5 pb-5">
                     <div className="ml-14">
                       <p className="text-base font-medium text-stone-400 leading-relaxed mb-4 whitespace-pre-line">{d.desc}</p>
@@ -109,6 +115,7 @@ export default function Timeline() {
                           fill
                           className="object-cover"
                           sizes="(max-width: 480px) 100vw, 400px"
+                          loading="eager"
                         />
                       </div>
 
@@ -120,7 +127,7 @@ export default function Timeline() {
                       <p className="text-xs font-medium text-stone-400 italic">{d.review}</p>
                     </div>
                   </div>
-                )}
+                </div>
               </div>
             )
           })}
