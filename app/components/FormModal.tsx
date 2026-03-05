@@ -74,25 +74,47 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
         if (val) utmParams[key] = val
       })
 
-      const res = await fetch('/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: name.trim(),
-          gender,
-          birth_date: birthDate,
-          phone,
-          ...utmParams,
-        }),
+      const payload = JSON.stringify({
+        name: name.trim(),
+        gender,
+        birth_date: birthDate,
+        phone,
+        ...utmParams,
       })
+
+      let res: Response
+      try {
+        res = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: payload,
+        })
+      } catch (fetchErr) {
+        // 인스타그램 등 인앱 브라우저에서 fetch 실패 시 XMLHttpRequest 폴백
+        res = await new Promise<Response>((resolve, reject) => {
+          const xhr = new XMLHttpRequest()
+          xhr.open('POST', '/api/register')
+          xhr.setRequestHeader('Content-Type', 'application/json')
+          xhr.withCredentials = true
+          xhr.onload = () => {
+            resolve(new Response(xhr.responseText, {
+              status: xhr.status,
+              statusText: xhr.statusText,
+            }))
+          }
+          xhr.onerror = () => reject(new Error('네트워크 연결에 실패했습니다.'))
+          xhr.send(payload)
+        })
+      }
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}))
         throw new Error(data.error || `등록 실패 (${res.status})`)
       }
 
-      gtagEvent('form_submit', {})
-      pixelEvent('Lead')
+      try { gtagEvent('form_submit', {}) } catch (_) { /* ignore */ }
+      try { pixelEvent('Lead') } catch (_) { /* ignore */ }
 
       setName('')
       setGender('')

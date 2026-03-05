@@ -3,6 +3,16 @@ import { createClient } from '@supabase/supabase-js'
 
 const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+}
+
+export async function OPTIONS() {
+  return NextResponse.json(null, { status: 204, headers: corsHeaders })
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json()
@@ -10,16 +20,16 @@ export async function POST(request: Request) {
 
     // 유효성 검사
     if (!name || name.trim().length < 2) {
-      return NextResponse.json({ error: '이름을 2자 이상 입력해주세요.' }, { status: 400 })
+      return NextResponse.json({ error: '이름을 2자 이상 입력해주세요.' }, { status: 400, headers: corsHeaders })
     }
     if (!gender || !['male', 'female'].includes(gender)) {
-      return NextResponse.json({ error: '성별을 선택해주세요.' }, { status: 400 })
+      return NextResponse.json({ error: '성별을 선택해주세요.' }, { status: 400, headers: corsHeaders })
     }
     if (!birth_date || !/^\d{6}$/.test(birth_date)) {
-      return NextResponse.json({ error: '생년월일 6자리를 입력해주세요.' }, { status: 400 })
+      return NextResponse.json({ error: '생년월일 6자리를 입력해주세요.' }, { status: 400, headers: corsHeaders })
     }
     if (!phone || !/^010-\d{4}-\d{4}$/.test(phone)) {
-      return NextResponse.json({ error: '전화번호 형식이 올바르지 않습니다.' }, { status: 400 })
+      return NextResponse.json({ error: '전화번호 형식이 올바르지 않습니다.' }, { status: 400, headers: corsHeaders })
     }
 
     // Supabase 저장
@@ -27,7 +37,7 @@ export async function POST(request: Request) {
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
     if (!supabaseUrl || !supabaseKey) {
-      return NextResponse.json({ error: 'Supabase 설정이 없습니다.' }, { status: 500 })
+      return NextResponse.json({ error: 'Supabase 설정이 없습니다.' }, { status: 500, headers: corsHeaders })
     }
 
     const supabase = createClient(supabaseUrl, supabaseKey)
@@ -86,9 +96,12 @@ export async function POST(request: Request) {
       }).catch((err) => console.error('Slack 알림 실패:', err))
     }
 
-    return NextResponse.json({ success: true, id: data?.[0]?.id })
+    return NextResponse.json({ success: true, id: data?.[0]?.id }, { headers: corsHeaders })
   } catch (err: unknown) {
     console.error('Registration error:', err instanceof Error ? err.message : JSON.stringify(err))
-    return NextResponse.json({ error: '등록에 실패했습니다. 잠시 후 다시 시도해주세요.' }, { status: 500 })
+    return NextResponse.json(
+      { error: '등록에 실패했습니다. 잠시 후 다시 시도해주세요.' },
+      { status: 500, headers: corsHeaders },
+    )
   }
 }
