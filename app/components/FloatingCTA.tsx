@@ -14,19 +14,15 @@ export default function FloatingCTA({ onCtaClick, isModalOpen }: FloatingCTAProp
   const [hideForClosing, setHideForClosing] = useState(false)
 
   useEffect(() => {
-    // Show only after Pricing section is passed
-    const pricingTarget = document.getElementById('pricing-section')
-    if (!pricingTarget) return
-
-    const showObs = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
-          setShow(true)
-        }
-      },
-      { threshold: 0 }
-    )
-    showObs.observe(pricingTarget)
+    // Show after 30% scroll
+    const handleScroll = () => {
+      const scrollPct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)
+      if (scrollPct >= 0.3) {
+        setShow(true)
+        window.removeEventListener('scroll', handleScroll)
+      }
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
 
     // Hide when Closing section is visible
     const closingTarget = document.getElementById('closing-section')
@@ -42,7 +38,7 @@ export default function FloatingCTA({ onCtaClick, isModalOpen }: FloatingCTAProp
     }
 
     return () => {
-      showObs.disconnect()
+      window.removeEventListener('scroll', handleScroll)
       hideObs?.disconnect()
     }
   }, [])
