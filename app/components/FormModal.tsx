@@ -160,6 +160,7 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
                   className="h-6 w-auto mb-4"
                 />
                 <h2 className="text-2xl font-bold text-stone-900">1기 우선 참여 자격 확보</h2>
+                <p className="text-sm font-medium text-stone-500 mt-2">지금은 자리만 예약합니다. 참가비는 이후 안내드립니다.</p>
               </div>
               <button onClick={handleClose} className="p-2 -mr-2 text-stone-400 hover:text-stone-900 bg-white rounded-full">
                 <X size={20} />

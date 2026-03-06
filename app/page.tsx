@@ -2,12 +2,14 @@
 
 import { useState, useEffect, useRef, useCallback, Suspense } from 'react'
 import Hero from '@/app/components/sections/Hero'
+import FounderStory from '@/app/components/sections/FounderStory'
 import PainPoint from '@/app/components/sections/PainPoint'
 import CampIntro from '@/app/components/sections/CampIntro'
 import BeforeAfter from '@/app/components/sections/BeforeAfter'
 import Comparison from '@/app/components/sections/Comparison'
 import Timeline from '@/app/components/sections/Timeline'
 import Science from '@/app/components/sections/Science'
+import ParentTrust from '@/app/components/sections/ParentTrust'
 import Pricing from '@/app/components/sections/Pricing'
 import FAQ from '@/app/components/sections/FAQ'
 import Closing from '@/app/components/sections/Closing'
@@ -23,6 +25,7 @@ export default function LandingPage() {
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [isSuccessOpen, setIsSuccessOpen] = useState(false)
   const scrollTracked = useRef<Set<number>>(new Set())
+  const viewContentFired = useRef(false)
 
   const handleFormOpen = useCallback(() => {
     gtagEvent('form_open', {})
@@ -39,7 +42,7 @@ export default function LandingPage() {
     setIsSuccessOpen(true)
   }
 
-  // Scroll depth tracking (GA4) + S5 ViewContent (Pixel)
+  // Scroll depth tracking (GA4)
   useEffect(() => {
     const handleScroll = () => {
       const scrollPct = Math.round(
@@ -52,21 +55,36 @@ export default function LandingPage() {
           gtagEvent('scroll_depth', { depth: String(threshold) })
         }
       })
-
-      // S5 (Timeline) 도달 시 Pixel ViewContent
-      if (scrollPct >= 60 && !scrollTracked.current.has(60)) {
-        scrollTracked.current.add(60)
-        pixelEvent('ViewContent')
-      }
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // ViewContent pixel on pricing section visibility
+  useEffect(() => {
+    const pricingEl = document.getElementById('pricing-section')
+    if (!pricingEl) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !viewContentFired.current) {
+          viewContentFired.current = true
+          pixelEvent('ViewContent', { content_name: 'pricing' })
+        }
+      },
+      { threshold: 0.2 }
+    )
+    observer.observe(pricingEl)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <main className="w-full pb-24">
-      <Hero onCtaClick={handleFormOpen} />
+      <Suspense fallback={null}>
+        <Hero onCtaClick={handleFormOpen} />
+      </Suspense>
+      <FounderStory />
       <div id="painpoint-section">
         <PainPoint />
       </div>
@@ -77,6 +95,7 @@ export default function LandingPage() {
       <Comparison />
       <Timeline />
       <Science />
+      <ParentTrust />
       <Pricing onCtaClick={handleFormOpen} />
       <FAQ />
       <div id="closing-section">

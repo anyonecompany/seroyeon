@@ -1,5 +1,7 @@
 'use client'
 
+import { useMemo } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import { event as gtagEvent } from '@/app/lib/gtag'
@@ -8,7 +10,31 @@ interface HeroProps {
   onCtaClick: () => void
 }
 
+const heroCopy = {
+  a: {
+    headline: <>스펙 말고,<br />사람을 봅니다</>,
+    sub: <>조건표 없이 만나는<br />3박 4일 결혼 매칭 캠프</>,
+  },
+  b: {
+    headline: <>결혼, 제대로<br />준비해본 적 있나요?</>,
+    sub: <>진심인 사람들만 모이는<br />3박 4일 매칭 캠프</>,
+  },
+  c: {
+    headline: <>처음으로,<br />나답게 만나는 소개팅</>,
+    sub: <>프로필 대신 대화로 시작하는<br />3박 4일</>,
+  },
+}
+
 export default function Hero({ onCtaClick }: HeroProps) {
+  const searchParams = useSearchParams()
+
+  const copy = useMemo(() => {
+    const utmContent = searchParams.get('utm_content') || ''
+    if (utmContent === 'type-b') return heroCopy.b
+    if (utmContent === 'type-c') return heroCopy.c
+    return heroCopy.a
+  }, [searchParams])
+
   const handleCta = () => {
     gtagEvent('cta_click', { location: 'hero' })
     onCtaClick()
@@ -41,9 +67,9 @@ export default function Hero({ onCtaClick }: HeroProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
-          className="text-[2rem] font-black leading-tight mb-5"
+          className="text-[28px] font-black leading-tight mb-5"
         >
-          3박 4일,<br />진짜 사람을 만나는 시간
+          {copy.headline}
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }}
@@ -51,7 +77,7 @@ export default function Hero({ onCtaClick }: HeroProps) {
           transition={{ duration: 0.8, delay: 0.15 }}
           className="text-base font-medium leading-snug text-stone-300"
         >
-          프로필이 아닌 경험으로<br />연결되는 결혼 매칭 캠프
+          {copy.sub}
         </motion.p>
       </div>
 
@@ -72,7 +98,7 @@ export default function Hero({ onCtaClick }: HeroProps) {
           onClick={handleCta}
           className="w-full bg-[#FF6321] hover:bg-[#E55A1E] text-white text-base font-medium py-4 rounded-xl transition-transform active:scale-95"
         >
-          30초 만에 무료 등록하기
+          무료 사전 등록하기
         </motion.button>
 
         <p className="mt-4 text-xs font-medium text-stone-500 text-center">

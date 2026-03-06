@@ -29,8 +29,25 @@ export default function Pricing({ onCtaClick }: PricingProps) {
   ]
 
   return (
-    <section className="py-16 px-6 bg-white border-t border-stone-200">
+    <section id="pricing-section" className="py-16 px-6 bg-white border-t border-stone-200">
       <div className="max-w-[480px] mx-auto">
+        {/* Price framing */}
+        <div className="bg-stone-50 rounded-2xl p-6 mb-12 text-center">
+          <p className="text-base font-medium text-stone-900 mb-2 leading-relaxed">
+            참가비가 있기 때문에,
+          </p>
+          <p className="text-xl font-bold text-[#FF6321] mb-3">
+            진심인 사람만 옵니다.
+          </p>
+          <p className="text-sm font-medium text-stone-500 leading-relaxed">
+            결혼정보회사 1년 200~500만원.
+            <br />
+            이 캠프는 3박 4일에 79만원.
+            <br />
+            79만원은 진지한 만남의 입장권입니다.
+          </p>
+        </div>
+
         {/* Step 0: Selection process first */}
         <div className="mb-12">
           <h3 className="text-center text-2xl font-bold text-stone-900 mb-3">
@@ -96,7 +113,11 @@ export default function Pricing({ onCtaClick }: PricingProps) {
           <p className="text-2xl font-bold text-stone-300 line-through decoration-red-500/50 decoration-4 mb-8">300~600만 원</p>
           <p className="text-5xl font-black text-stone-900 mb-2">79만 원</p>
           <p className="text-xs font-medium text-stone-500 mb-2">(3박 4일 숙식 포함)</p>
-          <p className="text-xs font-medium text-stone-400">2기부터 정가 150만 원 예정</p>
+          <p className="text-xs font-medium text-stone-400 mb-4">2기부터 정가 150만 원 예정</p>
+          <p className="inline-flex items-center gap-1.5 text-xs font-bold text-[#FF6321] bg-[#FF6321]/10 rounded-full px-3 py-1.5">
+            <span className="w-1.5 h-1.5 bg-[#FF6321] rounded-full animate-pulse" />
+            잔여 자리 확인 중
+          </p>
         </div>
 
         <div className="bg-white border border-stone-200 p-6 rounded-2xl text-center mb-6">
@@ -116,10 +137,13 @@ export default function Pricing({ onCtaClick }: PricingProps) {
         </p>
         <button
           onClick={handleCta}
-          className="w-full bg-[#FF6321] hover:bg-[#E55A1E] text-white text-base font-medium py-4 rounded-xl transition-transform active:scale-95 mb-10"
+          className="w-full bg-[#FF6321] hover:bg-[#E55A1E] text-white text-base font-medium py-4 rounded-xl transition-transform active:scale-95 mb-4"
         >
-          무료 사전 등록하기
+          자리 선점하기
         </button>
+        <p className="text-center text-xs font-medium text-stone-400 mb-10">
+          지금은 자리만 예약합니다. 참가비는 이후 안내드립니다.
+        </p>
 
         {/* Unselected info */}
         <div className="bg-white border border-stone-200 rounded-2xl p-6 mb-10">

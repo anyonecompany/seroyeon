@@ -67,7 +67,7 @@ export default function Closing({ onCtaClick }: ClosingProps) {
           onClick={handleCta}
           className="w-full bg-[#FF6321] hover:bg-[#E55A1E] text-white text-base font-medium py-4 rounded-xl transition-transform active:scale-95 mb-8"
         >
-          30초 만에 무료 등록하기
+          1기 얼리버드 신청하기
         </button>
 
         <p className="text-base font-medium text-stone-400 mb-1">좋은 사람은,</p>
