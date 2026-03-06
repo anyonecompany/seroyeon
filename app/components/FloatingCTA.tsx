@@ -63,7 +63,7 @@ export default function FloatingCTA({ onCtaClick, isModalOpen }: FloatingCTAProp
             <p className="text-xs font-medium text-[#FF6321] text-center mb-2">100명+ 등록 중</p>
             <button
               onClick={handleCta}
-              className="w-full bg-[#FF6321] hover:bg-[#E55A1E] text-white text-base font-medium py-4 rounded-xl active:scale-95 transition-transform"
+              className="w-full bg-[#FF6321] hover:bg-[#E55A1E] text-white text-base font-medium py-4 rounded-xl active:scale-95 transition-transform cursor-pointer focus-visible:ring-2 focus-visible:ring-[#FF6321] focus-visible:ring-offset-2"
             >
               무료 사전 등록
             </button>

@@ -46,7 +46,7 @@ export default function Hero({ onCtaClick }: HeroProps) {
         </h1>
 
         {/* 서브카피 */}
-        <p className="mt-5 text-[17px] leading-[1.9] text-white/85">
+        <p className="mt-5 text-[17px] leading-[1.75] text-white/85">
           잘 맞는 사람은 3시간이 아니라
           <br />
           72시간을 함께해야 알 수 있습니다.
@@ -71,20 +71,17 @@ export default function Hero({ onCtaClick }: HeroProps) {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
           onClick={handleCta}
-          className="mt-5 w-[88%] mx-auto h-[58px] bg-[#FF6321] hover:bg-[#E55A1E] text-white text-lg font-bold rounded-2xl shadow-[0_4px_20px_rgba(255,99,33,0.4)] transition-transform active:scale-95"
+          className="mt-5 w-[88%] mx-auto h-[58px] bg-[#E04F10] hover:bg-[#C9440D] text-white text-lg font-bold rounded-2xl shadow-[0_4px_20px_rgba(255,99,33,0.4)] transition-transform active:scale-95 cursor-pointer focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
         >
           내 자리 확인하기 →
         </motion.button>
 
         {/* 마이크로카피 */}
-        <p className="mt-2.5 text-xs text-white/55 text-center">
+        <p className="mt-2.5 text-xs text-white/60 text-center">
           지금은 자리만 예약합니다 &middot; 참가비 79만원은 등록 후 별도 안내드려요
         </p>
 
-        {/* 소셜 프루프 */}
-        <p className="mt-4 text-[13px] text-white/50 text-center mb-8">
-          &ldquo;이런 프로그램을 기다리고 있었어요&rdquo; — 사전 등록자 후기
-        </p>
+        <div className="mb-8 pb-[env(safe-area-inset-bottom)]" />
       </motion.div>
     </section>
   )
