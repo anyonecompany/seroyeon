@@ -2,7 +2,7 @@
 
 export default function PainPoint() {
   return (
-    <section className="py-16 px-6 bg-stone-50">
+    <section className="py-16 px-6 bg-[#FAF6F1]">
       <div className="max-w-[480px] mx-auto">
         <h2 className="text-[2rem] font-black mb-12 text-center text-stone-900 leading-tight">
           혹시, 이런 생각<br />해본 적 있으세요?

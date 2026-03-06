@@ -57,7 +57,7 @@ export default function BeforeAfter({ onCtaClick }: BeforeAfterProps) {
   }
 
   return (
-    <section className="py-16 px-6 bg-gradient-to-b from-stone-50 to-white">
+    <section className="py-16 px-6 bg-[#FAF6F1]">
       <div className="max-w-[480px] mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-[2rem] font-black text-stone-900 leading-tight">
@@ -72,7 +72,7 @@ export default function BeforeAfter({ onCtaClick }: BeforeAfterProps) {
               ref={(el) => { cardRefs.current[i] = el }}
               className="rounded-2xl overflow-hidden border border-stone-200"
             >
-              <div className="bg-stone-100 p-6">
+              <div className="bg-stone-200 p-6">
                 <p className="text-xs font-medium tracking-widest text-stone-400 uppercase mb-3">Before</p>
                 <p
                   className="text-base font-medium text-stone-500"
