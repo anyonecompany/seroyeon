@@ -29,7 +29,11 @@ export default function LandingPage() {
 
   const handleFormOpen = useCallback(() => {
     gtagEvent('form_open', {})
-    pixelEvent('InitiateCheckout')
+    pixelEvent('InitiateCheckout', {
+      content_name: '서로연 사전 등록',
+      value: 790000,
+      currency: 'KRW',
+    })
     setIsFormOpen(true)
   }, [])
 
@@ -70,7 +74,11 @@ export default function LandingPage() {
       ([entry]) => {
         if (entry.isIntersecting && !viewContentFired.current) {
           viewContentFired.current = true
-          pixelEvent('ViewContent', { content_name: 'pricing' })
+          pixelEvent('ViewContent', {
+            content_name: '서로연 3박4일 결혼 매칭 캠프',
+            value: 790000,
+            currency: 'KRW',
+          })
         }
       },
       { threshold: 0.5 }

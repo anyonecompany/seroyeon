@@ -114,7 +114,11 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
       }
 
       try { gtagEvent('form_submit', {}) } catch (_) { /* ignore */ }
-      try { pixelEvent('Lead') } catch (_) { /* ignore */ }
+      try { pixelEvent('Lead', {
+        content_name: '서로연 사전 등록 완료',
+        value: 790000,
+        currency: 'KRW',
+      }) } catch (_) { /* ignore */ }
 
       setName('')
       setGender('')
