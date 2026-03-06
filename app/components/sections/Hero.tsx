@@ -27,8 +27,8 @@ export default function Hero({ onCtaClick }: HeroProps) {
           quality={80}
           className="object-cover"
         />
-        {/* 하단 75% 다크 그라데이션 */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 via-40% to-transparent" />
+        {/* 하단 다크 그라데이션 — 모바일 야외 가독성 확보 */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black from-5% via-black/90 via-45% to-black/20" />
       </div>
 
       {/* 콘텐츠 — 하단 정렬 */}
@@ -36,32 +36,32 @@ export default function Hero({ onCtaClick }: HeroProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="relative z-10 h-full max-w-[480px] mx-auto flex flex-col justify-end pt-[44px] px-6"
+        className="relative z-10 h-full max-w-[480px] mx-auto flex flex-col justify-end pt-[44px] px-5"
       >
         {/* 헤드카피 */}
-        <h1 className="text-[32px] font-extrabold leading-[1.35] text-white tracking-tight">
+        <h1 className="text-[28px] font-extrabold leading-[1.4] text-white tracking-tight">
           설레는 게 당연합니다.
           <br />
           이 만남이 진짜일 수 있으니까요.
         </h1>
 
         {/* 서브카피 */}
-        <p className="mt-4 text-base leading-[1.8] text-white/70">
+        <p className="mt-4 text-[15px] leading-[1.8] text-white/90">
           잘 맞는 사람은 3시간이 아니라
           <br />
           72시간을 함께해야 알 수 있습니다.
         </p>
-        <p className="mt-3 text-base leading-[1.8] text-white/90 font-medium">
+        <p className="mt-3 text-[15px] leading-[1.8] text-white font-medium">
           딱 한 번만, 3박 4일을 진심으로 써보세요.
         </p>
 
         {/* USP 한 줄 */}
-        <p className="mt-5 text-sm font-bold text-[#FF6321]">
+        <p className="mt-5 text-[15px] font-bold text-[#FF6321]">
           연봉·직업·조건은 묻지 않습니다. 사람만 봅니다.
         </p>
 
         {/* 신뢰 배지 */}
-        <div className="mt-4 flex items-center gap-3 text-xs text-white/60">
+        <div className="mt-4 flex items-center gap-3 text-[13px] text-white/80">
           <span className="flex items-center gap-1">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             단 10명 정예
@@ -90,7 +90,7 @@ export default function Hero({ onCtaClick }: HeroProps) {
         </motion.button>
 
         {/* 마이크로카피 */}
-        <p className="mt-2.5 text-xs text-white/60 text-center">
+        <p className="mt-2.5 text-[13px] text-white/70 text-center">
           지금은 자리만 예약합니다 &middot; 참가비 79만원은 등록 후 별도 안내드려요
         </p>
 
