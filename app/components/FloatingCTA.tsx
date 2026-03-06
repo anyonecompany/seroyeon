@@ -14,9 +14,9 @@ export default function FloatingCTA({ onCtaClick, isModalOpen }: FloatingCTAProp
   const [hideForClosing, setHideForClosing] = useState(false)
 
   useEffect(() => {
-    // Show after BeforeAfter section is passed
-    const beforeAfterTarget = document.getElementById('beforeafter-section')
-    if (!beforeAfterTarget) return
+    // Show only after Pricing section is passed
+    const pricingTarget = document.getElementById('pricing-section')
+    if (!pricingTarget) return
 
     const showObs = new IntersectionObserver(
       ([entry]) => {
@@ -26,7 +26,7 @@ export default function FloatingCTA({ onCtaClick, isModalOpen }: FloatingCTAProp
       },
       { threshold: 0 }
     )
-    showObs.observe(beforeAfterTarget)
+    showObs.observe(pricingTarget)
 
     // Hide when Closing section is visible
     const closingTarget = document.getElementById('closing-section')
