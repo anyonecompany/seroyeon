@@ -1,5 +1,7 @@
 // Server Component
 
+import { ChevronRight } from 'lucide-react'
+
 export default function Comparison() {
   const items = [
     { label: '판단 기준', old: '프로필 사진 1장', now: '3박 4일 함께 생활' },
@@ -9,25 +11,41 @@ export default function Comparison() {
   ]
 
   return (
-    <section className="py-20 px-6 bg-white border-t border-stone-200">
+    <section className="py-20 px-6 bg-white">
       <div className="max-w-[480px] mx-auto">
         <h2 className="text-[2rem] font-black mb-12 text-center text-stone-900 leading-tight">
           기존 방식으로는<br />절대 알 수 없던 것들.
         </h2>
 
-        <div className="space-y-8 mb-12">
+        <div className="space-y-3 mb-10">
           {items.map((item, i) => (
-            <div key={i} className="border-t border-stone-200 pt-5">
-              <p className="text-xs font-medium tracking-widest text-stone-400 uppercase mb-3">{item.label}</p>
-              <p className="text-base font-medium text-stone-400" style={{ textDecorationLine: 'line-through', textDecorationColor: '#a8a29e', textDecorationThickness: '2px' }}>{item.old}</p>
-              <p className="text-base font-medium text-stone-900 mt-1">{item.now}</p>
+            <div key={i} className="grid grid-cols-[1fr_auto_1fr] items-stretch rounded-2xl overflow-hidden border border-stone-200">
+              <div className="bg-stone-100 p-4">
+                <p className="text-[10px] font-medium tracking-widest text-stone-400 uppercase mb-2">{item.label}</p>
+                <p className="text-sm font-medium text-stone-400 leading-snug">{item.old}</p>
+              </div>
+              <div className="flex items-center justify-center w-8 bg-stone-50">
+                <ChevronRight size={14} className="text-[#FF6321]" />
+              </div>
+              <div className="bg-white p-4">
+                <p className="text-[10px] font-medium tracking-widest text-[#FF6321] uppercase mb-2">서로연</p>
+                <p className="text-sm font-bold text-stone-900 leading-snug">{item.now}</p>
+              </div>
             </div>
           ))}
 
-          <div className="bg-[#FF6321]/5 border border-[#FF6321]/20 rounded-2xl p-5">
-            <p className="text-xs font-medium tracking-widest text-stone-400 uppercase mb-3">결과</p>
-            <p className="text-base font-medium text-stone-400" style={{ textDecorationLine: 'line-through', textDecorationColor: '#a8a29e', textDecorationThickness: '2px' }}>모르겠다</p>
-            <p className="text-base font-medium text-stone-900 mt-1">&quot;이 사람이다&quot; 또는 &quot;아니다&quot;라는 확신</p>
+          <div className="grid grid-cols-[1fr_auto_1fr] items-stretch rounded-2xl overflow-hidden border border-[#FF6321]/30">
+            <div className="bg-stone-100 p-4">
+              <p className="text-[10px] font-medium tracking-widest text-stone-400 uppercase mb-2">결과</p>
+              <p className="text-sm font-medium text-stone-400 leading-snug">모르겠다</p>
+            </div>
+            <div className="flex items-center justify-center w-8 bg-stone-50">
+              <ChevronRight size={14} className="text-[#FF6321]" />
+            </div>
+            <div className="bg-[#FF6321]/5 p-4">
+              <p className="text-[10px] font-medium tracking-widest text-[#FF6321] uppercase mb-2">서로연</p>
+              <p className="text-sm font-bold text-stone-900 leading-snug">&quot;이 사람이다&quot; 또는<br />&quot;아니다&quot;라는 확신</p>
+            </div>
           </div>
         </div>
 

@@ -35,10 +35,10 @@ export default function BeforeAfter({ onCtaClick }: BeforeAfterProps) {
   }
 
   return (
-    <section className="py-16 px-6 bg-white">
+    <section className="py-16 px-6 bg-stone-900">
       <div className="max-w-[480px] mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-[2rem] font-black text-stone-900 leading-tight">
+          <h2 className="text-[2rem] font-black text-white leading-tight">
             3박 4일 전의 나.<br />3박 4일 후의 나.
           </h2>
         </div>
@@ -47,44 +47,41 @@ export default function BeforeAfter({ onCtaClick }: BeforeAfterProps) {
           {cards.map((card, i) => (
             <div
               key={i}
-              className="grid grid-cols-[1fr_auto_1fr] items-stretch rounded-2xl overflow-hidden border border-stone-200"
+              className="grid grid-cols-[1fr_auto_1fr] items-stretch rounded-2xl overflow-hidden border border-stone-700"
             >
-              <div className="bg-stone-200 p-4">
-                <p className="text-[10px] font-medium tracking-widest text-stone-400 uppercase mb-2">Before</p>
-                <p
-                  className="text-sm font-medium text-stone-500 leading-snug"
-                  style={{ textDecorationLine: 'line-through', textDecorationColor: '#a8a29e', textDecorationThickness: '1.5px' }}
-                >
+              <div className="bg-stone-800 p-4">
+                <p className="text-[10px] font-medium tracking-widest text-stone-500 uppercase mb-2">Before</p>
+                <p className="text-sm font-medium text-stone-400 leading-snug">
                   {card.before}
                 </p>
-                <p className="text-[11px] font-medium text-stone-400 mt-1.5">{card.beforeSub}</p>
+                <p className="text-[11px] font-medium text-stone-500 mt-1.5">{card.beforeSub}</p>
               </div>
 
-              <div className="flex items-center justify-center w-8 bg-stone-100">
+              <div className="flex items-center justify-center w-8 bg-stone-800/50">
                 <ChevronRight size={14} className="text-[#FF6321]" />
               </div>
 
-              <div className="bg-white p-4">
+              <div className="bg-stone-900 p-4">
                 <p className="text-[10px] font-medium tracking-widest text-[#FF6321] uppercase mb-2">After</p>
-                <p className="text-sm font-bold text-stone-900 leading-snug">{card.after}</p>
-                <p className="text-[11px] font-medium text-stone-500 mt-1.5">{card.afterSub}</p>
+                <p className="text-sm font-bold text-white leading-snug">{card.after}</p>
+                <p className="text-[11px] font-medium text-stone-400 mt-1.5">{card.afterSub}</p>
               </div>
             </div>
           ))}
         </div>
 
         <div className="mt-12 text-center">
-          <p className="text-base font-medium text-stone-900">
+          <p className="text-base font-medium text-white">
             3박 4일은 생각보다 짧지 않습니다.
           </p>
-          <p className="text-base font-medium text-stone-500 mt-2">
+          <p className="text-base font-medium text-stone-400 mt-2">
             누군가의 진짜 모습을 알기에 충분한 시간.
           </p>
         </div>
 
         {onCtaClick && (
           <div className="mt-8 text-center">
-            <p className="text-base font-medium text-stone-500 mb-2">관심이 생기셨나요?</p>
+            <p className="text-base font-medium text-stone-400 mb-2">관심이 생기셨나요?</p>
             <button
               onClick={handleMidCta}
               className="text-base font-medium text-[#FF6321] cursor-pointer bg-transparent border-none"
