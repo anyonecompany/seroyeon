@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <body className="bg-stone-100 text-stone-900 antialiased" suppressHydrationWarning>
-        <div className="max-w-[480px] mx-auto bg-white min-h-screen relative overflow-x-hidden">
+        <div className="max-w-[480px] mx-auto min-h-screen relative overflow-x-hidden">
           {children}
         </div>
 
