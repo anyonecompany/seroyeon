@@ -39,19 +39,19 @@ export default function Hero({ onCtaClick }: HeroProps) {
         className="relative z-10 h-full max-w-[480px] mx-auto flex flex-col justify-end pt-[44px] px-6"
       >
         {/* 헤드카피 */}
-        <h1 className="text-[32px] font-bold leading-[1.5] text-white">
+        <h1 className="text-[32px] font-extrabold leading-[1.35] text-white tracking-tight">
           설레는 게 당연합니다.
           <br />
           이 만남이 진짜일 수 있으니까요.
         </h1>
 
         {/* 서브카피 */}
-        <p className="mt-5 text-[17px] leading-[1.75] text-white/85">
+        <p className="mt-4 text-base leading-[1.8] text-white/70">
           잘 맞는 사람은 3시간이 아니라
           <br />
           72시간을 함께해야 알 수 있습니다.
-          <br />
-          <br />
+        </p>
+        <p className="mt-3 text-base leading-[1.8] text-white/90 font-medium">
           딱 한 번만, 3박 4일을 진심으로 써보세요.
         </p>
 
