@@ -171,8 +171,9 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
               </button>
             </div>
 
-            <div className="p-6 overflow-y-auto flex-1">
-              <form id="register-form" onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+              <div className="p-6 overflow-y-auto flex-1">
+                <div className="space-y-6">
                 {/* Name */}
                 <div>
                   <label className="block text-xs font-medium text-stone-700 mb-2">이름</label>
@@ -180,7 +181,6 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    autoFocus
                     className="w-full bg-white border border-stone-200 rounded-xl px-4 py-3 text-base font-medium focus:outline-none focus:ring-2 focus:ring-[#FF6321]/50 focus:border-[#FF6321] transition-colors"
                     placeholder="실명을 입력해주세요"
                   />
@@ -243,7 +243,7 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
                   <p className="text-xs font-medium text-stone-400 mt-1">선발 결과 안내용으로만 사용됩니다</p>
                   {errors.phone && <p className="text-xs font-medium text-red-500 mt-1">{errors.phone}</p>}
                 </div>
-              </form>
+              </div>
             </div>
 
             <div className="p-6 border-t border-stone-200 bg-white">
@@ -307,7 +307,6 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
               </AnimatePresence>
               <button
                 type="submit"
-                form="register-form"
                 disabled={loading || !agreed}
                 className={`w-full text-base font-medium py-4 rounded-xl active:scale-95 transition-all ${
                   isValid() && agreed && !loading
@@ -321,6 +320,7 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
                 결제 정보를 요구하지 않습니다
               </p>
             </div>
+            </form>
           </motion.div>
         </div>
       )}

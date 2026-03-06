@@ -16,6 +16,7 @@ import Closing from '@/app/components/sections/Closing'
 import Footer from '@/app/components/Footer'
 import FloatingCTA from '@/app/components/FloatingCTA'
 import FloatingChatButton from '@/app/components/FloatingChatButton'
+import UrgencyBar from '@/app/components/UrgencyBar'
 import FormModal from '@/app/components/FormModal'
 import SuccessModal from '@/app/components/SuccessModal'
 import { event as gtagEvent } from '@/app/lib/gtag'
@@ -89,6 +90,7 @@ export default function LandingPage() {
 
   return (
     <main className="w-full">
+      <UrgencyBar />
       <Suspense fallback={null}>
         <Hero onCtaClick={handleFormOpen} />
       </Suspense>
