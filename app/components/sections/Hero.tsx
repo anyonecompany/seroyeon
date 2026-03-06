@@ -38,44 +38,30 @@ export default function Hero({ onCtaClick }: HeroProps) {
         transition={{ duration: 0.8 }}
         className="relative z-10 h-full max-w-[480px] mx-auto flex flex-col justify-end pt-[44px] px-5"
       >
-        {/* 헤드카피 */}
-        <h1 className="text-[28px] font-extrabold leading-[1.4] text-white tracking-tight">
-          설레는 게 당연합니다.
+        {/* 헤드카피 — 압도적 크기로 시선 포착 */}
+        <h1 className="text-[36px] font-extrabold leading-[1.25] text-white tracking-tight">
+          3박 4일,
           <br />
-          이 만남이 진짜일 수 있으니까요.
+          설레는 소개팅
         </h1>
 
-        {/* 서브카피 */}
-        <p className="mt-4 text-[15px] leading-[1.8] text-white/90">
-          잘 맞는 사람은 3시간이 아니라
-          <br />
-          72시간을 함께해야 알 수 있습니다.
-        </p>
-        <p className="mt-3 text-[15px] leading-[1.8] text-white font-medium">
-          딱 한 번만, 3박 4일을 진심으로 써보세요.
+        {/* 서브카피 — 헤드와 확실한 크기 차이 */}
+        <p className="mt-6 text-[15px] leading-[1.7] text-white/75 font-light">
+          나의 평생 동반자를 찾는 시간
         </p>
 
-        {/* USP 한 줄 */}
-        <p className="mt-5 text-[15px] font-bold text-[#FF6321]">
-          연봉·직업·조건은 묻지 않습니다. 사람만 봅니다.
+        {/* USP — 오렌지로 시선 분리 */}
+        <p className="mt-6 text-[13px] font-semibold text-[#FF6321] tracking-wide">
+          연봉 · 직업 · 조건은 묻지 않습니다. 사람만 봅니다.
         </p>
 
-        {/* 신뢰 배지 */}
-        <div className="mt-4 flex items-center gap-3 text-[13px] text-white/80">
-          <span className="flex items-center gap-1">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            단 10명 정예
-          </span>
-          <span className="w-px h-3 bg-white/30" />
-          <span className="flex items-center gap-1">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a8 8 0 0 0-8 8c0 6 8 12 8 12s8-6 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
-            뇌과학 기반 설계
-          </span>
-          <span className="w-px h-3 bg-white/30" />
-          <span className="flex items-center gap-1">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            무료 사전 예약
-          </span>
+        {/* 신뢰 배지 — 가장 작고 가벼운 보조 정보 */}
+        <div className="mt-4 flex items-center gap-2.5 text-[11px] text-white/50 tracking-wide">
+          <span>단 10명 정예</span>
+          <span className="w-px h-2.5 bg-white/20" />
+          <span>뇌과학 기반 설계</span>
+          <span className="w-px h-2.5 bg-white/20" />
+          <span>무료 사전 예약</span>
         </div>
 
         {/* CTA 버튼 */}
