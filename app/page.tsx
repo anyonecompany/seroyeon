@@ -80,7 +80,7 @@ export default function LandingPage() {
   }, [])
 
   return (
-    <main className="w-full pb-24">
+    <main className="w-full">
       <Suspense fallback={null}>
         <Hero onCtaClick={handleFormOpen} />
       </Suspense>
