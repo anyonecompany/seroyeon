@@ -73,7 +73,7 @@ export default function LandingPage() {
           pixelEvent('ViewContent', { content_name: 'pricing' })
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.5 }
     )
     observer.observe(pricingEl)
     return () => observer.disconnect()

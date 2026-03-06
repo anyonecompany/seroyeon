@@ -4,7 +4,6 @@ import { Check } from 'lucide-react'
 
 const trustItems = [
   '신원이 확인된 참가자만 참여합니다',
-  '전문 진행팀이 전 일정 함께합니다',
   '안전하고 쾌적한 숙소에서 진행됩니다',
   '참가비가 있어 진지한 분들만 모입니다',
 ]

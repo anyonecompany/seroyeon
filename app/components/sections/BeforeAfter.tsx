@@ -57,7 +57,7 @@ export default function BeforeAfter({ onCtaClick }: BeforeAfterProps) {
   }
 
   return (
-    <section className="py-16 px-6 bg-white border-t border-stone-200">
+    <section className="py-16 px-6 bg-gradient-to-b from-stone-50 to-white">
       <div className="max-w-[480px] mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-[2rem] font-black text-stone-900 leading-tight">
@@ -70,25 +70,24 @@ export default function BeforeAfter({ onCtaClick }: BeforeAfterProps) {
             <div
               key={i}
               ref={(el) => { cardRefs.current[i] = el }}
-              className="bg-white rounded-2xl p-6 border border-stone-200"
+              className="rounded-2xl overflow-hidden border border-stone-200"
             >
-              <p className="text-xs font-medium tracking-widest text-stone-400 uppercase mb-3">Before</p>
-              <p
-                className="text-base font-medium text-stone-500"
-                style={{ textDecorationLine: 'line-through', textDecorationColor: '#44403c', textDecorationThickness: '2px' }}
-              >
-                {card.before}
-              </p>
-              <p className="text-xs font-medium text-stone-400 mt-1">{card.beforeSub}</p>
+              <div className="bg-stone-100 p-6">
+                <p className="text-xs font-medium tracking-widest text-stone-400 uppercase mb-3">Before</p>
+                <p
+                  className="text-base font-medium text-stone-500"
+                  style={{ textDecorationLine: 'line-through', textDecorationColor: '#44403c', textDecorationThickness: '2px' }}
+                >
+                  {card.before}
+                </p>
+                <p className="text-xs font-medium text-stone-400 mt-1">{card.beforeSub}</p>
+              </div>
 
-              <div className="flex items-center gap-3 my-5">
-                <div
-                  className="flex-1 h-px bg-stone-200 origin-left transition-transform duration-500 scale-x-0 [.is-visible_&]:scale-x-100"
-                />
+              <div className="flex items-center justify-center py-2 bg-white">
                 <ChevronDown size={14} className="text-[#FF6321]" />
               </div>
 
-              <div className="opacity-0 transition-opacity duration-600 [.is-visible_&]:opacity-100">
+              <div className="bg-white p-6 opacity-0 transition-opacity duration-600 [.is-visible_&]:opacity-100">
                 <p className="text-xs font-medium tracking-widest text-[#FF6321] uppercase mb-3">After</p>
                 <p className="text-base font-medium text-stone-900">{card.after}</p>
                 <p className="text-xs font-medium text-stone-600 mt-1">{card.afterSub}</p>
