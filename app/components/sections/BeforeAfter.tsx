@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { ChevronDown } from 'lucide-react'
+import { ChevronRight } from 'lucide-react'
 import { event as gtagEvent } from '@/app/lib/gtag'
 
 interface BeforeAfterProps {
@@ -30,34 +29,13 @@ const cards = [
 ]
 
 export default function BeforeAfter({ onCtaClick }: BeforeAfterProps) {
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([])
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible')
-          }
-        })
-      },
-      { threshold: 0.3, rootMargin: '0px' }
-    )
-
-    cardRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref)
-    })
-
-    return () => observer.disconnect()
-  }, [])
-
   const handleMidCta = () => {
     gtagEvent('cta_click', { location: 'mid' })
     onCtaClick?.()
   }
 
   return (
-    <section className="py-16 px-6 bg-[#FAF6F1]">
+    <section className="py-16 px-6 bg-white">
       <div className="max-w-[480px] mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-[2rem] font-black text-stone-900 leading-tight">
@@ -65,32 +43,31 @@ export default function BeforeAfter({ onCtaClick }: BeforeAfterProps) {
           </h2>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4">
           {cards.map((card, i) => (
             <div
               key={i}
-              ref={(el) => { cardRefs.current[i] = el }}
-              className="rounded-2xl overflow-hidden border border-stone-200"
+              className="grid grid-cols-[1fr_auto_1fr] items-stretch rounded-2xl overflow-hidden border border-stone-200"
             >
-              <div className="bg-stone-200 p-6">
-                <p className="text-xs font-medium tracking-widest text-stone-400 uppercase mb-3">Before</p>
+              <div className="bg-stone-200 p-4">
+                <p className="text-[10px] font-medium tracking-widest text-stone-400 uppercase mb-2">Before</p>
                 <p
-                  className="text-base font-medium text-stone-500"
-                  style={{ textDecorationLine: 'line-through', textDecorationColor: '#44403c', textDecorationThickness: '2px' }}
+                  className="text-sm font-medium text-stone-500 leading-snug"
+                  style={{ textDecorationLine: 'line-through', textDecorationColor: '#a8a29e', textDecorationThickness: '1.5px' }}
                 >
                   {card.before}
                 </p>
-                <p className="text-xs font-medium text-stone-400 mt-1">{card.beforeSub}</p>
+                <p className="text-[11px] font-medium text-stone-400 mt-1.5">{card.beforeSub}</p>
               </div>
 
-              <div className="flex items-center justify-center py-2 bg-white">
-                <ChevronDown size={14} className="text-[#FF6321]" />
+              <div className="flex items-center justify-center w-8 bg-stone-100">
+                <ChevronRight size={14} className="text-[#FF6321]" />
               </div>
 
-              <div className="bg-white p-6 opacity-0 transition-opacity duration-600 [.is-visible_&]:opacity-100">
-                <p className="text-xs font-medium tracking-widest text-[#FF6321] uppercase mb-3">After</p>
-                <p className="text-base font-medium text-stone-900">{card.after}</p>
-                <p className="text-xs font-medium text-stone-600 mt-1">{card.afterSub}</p>
+              <div className="bg-white p-4">
+                <p className="text-[10px] font-medium tracking-widest text-[#FF6321] uppercase mb-2">After</p>
+                <p className="text-sm font-bold text-stone-900 leading-snug">{card.after}</p>
+                <p className="text-[11px] font-medium text-stone-500 mt-1.5">{card.afterSub}</p>
               </div>
             </div>
           ))}
