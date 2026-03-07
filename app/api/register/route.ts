@@ -14,7 +14,7 @@ export async function OPTIONS() {
 }
 
 // 허용된 UTM 필드만 추출 (예상 외 파라미터 차단)
-const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'] as const
+const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content'] as const
 
 function pickUtm(body: Record<string, unknown>): Record<string, string> {
   const result: Record<string, string> = {}
