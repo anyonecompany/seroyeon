@@ -61,6 +61,33 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
     return Object.keys(errs).length === 0
   }
 
+  const doFetch = async (payload: string): Promise<Response> => {
+    // 1차: fetch
+    try {
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+      })
+      return res
+    } catch (_) {
+      // fetch 실패 → XHR 폴백
+    }
+
+    // 2차: XMLHttpRequest 폴백 (인앱 브라우저 대응)
+    return new Promise<Response>((resolve, reject) => {
+      const xhr = new XMLHttpRequest()
+      xhr.open('POST', '/api/register')
+      xhr.setRequestHeader('Content-Type', 'application/json')
+      xhr.timeout = 15000
+      xhr.onload = () =>
+        resolve(new Response(xhr.responseText, { status: xhr.status }))
+      xhr.onerror = () => reject(new Error('network_error'))
+      xhr.ontimeout = () => reject(new Error('timeout'))
+      xhr.send(payload)
+    })
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!validate()) return
@@ -82,35 +109,26 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
         ...utmParams,
       })
 
-      let res: Response
-      try {
-        res = await fetch('/api/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'same-origin',
-          body: payload,
-        })
-      } catch (fetchErr) {
-        // 인스타그램 등 인앱 브라우저에서 fetch 실패 시 XMLHttpRequest 폴백
-        res = await new Promise<Response>((resolve, reject) => {
-          const xhr = new XMLHttpRequest()
-          xhr.open('POST', '/api/register')
-          xhr.setRequestHeader('Content-Type', 'application/json')
-          xhr.withCredentials = true
-          xhr.onload = () => {
-            resolve(new Response(xhr.responseText, {
-              status: xhr.status,
-              statusText: xhr.statusText,
-            }))
-          }
-          xhr.onerror = () => reject(new Error('네트워크 연결에 실패했습니다.'))
-          xhr.send(payload)
-        })
+      // 최대 2회 시도 (자동 재시도 1회)
+      let res: Response | null = null
+      let lastErr: unknown = null
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          res = await doFetch(payload)
+          if (res.ok) break
+          // 4xx 에러는 재시도 불필요
+          if (res.status >= 400 && res.status < 500) break
+          lastErr = new Error(`서버 오류 (${res.status})`)
+        } catch (err) {
+          lastErr = err
+          // 1초 대기 후 재시도
+          if (attempt < 1) await new Promise(r => setTimeout(r, 1000))
+        }
       }
 
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}))
-        throw new Error(data.error || `등록 실패 (${res.status})`)
+      if (!res || !res.ok) {
+        const data = res ? await res.json().catch(() => ({})) : {}
+        throw new Error(data.error || (lastErr instanceof Error ? lastErr.message : '등록 실패'))
       }
 
       try { gtagEvent('form_submit', {}) } catch (_) { /* ignore */ }
@@ -127,7 +145,12 @@ export default function FormModal({ isOpen, onClose, onSuccess }: FormModalProps
       setErrors({})
       onSuccess()
     } catch (err) {
-      setSubmitError('일시적인 오류가 발생했어요. 아래 버튼을 눌러 다시 시도해주세요.')
+      const msg = err instanceof Error ? err.message : ''
+      if (msg === 'network_error' || msg === 'timeout') {
+        setSubmitError('네트워크 연결이 불안정합니다. 잠시 후 다시 시도해주세요.')
+      } else {
+        setSubmitError('일시적인 오류가 발생했어요. 아래 버튼을 눌러 다시 시도해주세요.')
+      }
       console.error('Registration error:', err)
     } finally {
       setLoading(false)

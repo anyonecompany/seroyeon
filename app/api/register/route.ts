@@ -13,10 +13,24 @@ export async function OPTIONS() {
   return NextResponse.json(null, { status: 204, headers: corsHeaders })
 }
 
+// 허용된 UTM 필드만 추출 (예상 외 파라미터 차단)
+const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'] as const
+
+function pickUtm(body: Record<string, unknown>): Record<string, string> {
+  const result: Record<string, string> = {}
+  for (const key of UTM_KEYS) {
+    if (typeof body[key] === 'string' && body[key]) {
+      result[key] = body[key] as string
+    }
+  }
+  return result
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { name, gender, birth_date, phone, ...utmParams } = body
+    const { name, gender, birth_date, phone } = body
+    const utmParams = pickUtm(body)
 
     // 유효성 검사
     if (!name || name.trim().length < 2) {
@@ -51,19 +65,19 @@ export async function POST(request: Request) {
 
     if (error) throw error
 
-    // Slack 알림
+    // Slack 알림 — 응답 블로킹 방지 (fire-and-forget)
     if (slackWebhookUrl) {
       const genderLabel = gender === 'male' ? '남성' : '여성'
       const now = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })
 
-      await fetch(slackWebhookUrl, {
+      fetch(slackWebhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           blocks: [
             {
               type: 'header',
-              text: { type: 'plain_text', text: '🎉 새로운 사전 등록!', emoji: true },
+              text: { type: 'plain_text', text: '새로운 사전 등록!', emoji: true },
             },
             {
               type: 'section',
